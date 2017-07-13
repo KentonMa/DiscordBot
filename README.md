@@ -1,6 +1,6 @@
-# RhinoBot: The music bot for Discord.
+# DiscordBot: The music bot for Discord.
 
-MusicBot is a Discord music bot written in [Python](https://www.python.org "Python homepage"). It plays requested songs and if the queue becomes empty it will play through a list of existing songs.
+DiscordBot is an extension of [MusicBot](https://github.com/Just-Some-Bots/MusicBot) written in [Python](https://www.python.org "Python homepage"). It plays requested songs and if the queue becomes empty it will play through a list of existing songs.
 
 ### How do I set it up?
 
