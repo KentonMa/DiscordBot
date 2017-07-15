@@ -67,14 +67,15 @@ class RiotApi:
       for stat in stats:
         if (stat['queueType'] == queueType):
           win_percentage = (stat['wins'] / (stat['wins'] + stat['losses'])) * 100
-          return '{} | Rank: {} {} | LP: {} | Wins: {} / Losses: {} (Win Rate: {:.2f}%)'.format(
+          return '```\n{}\nRank: {} {}\nLP: {}\nWins: {} / Losses: {} (Win Rate: {:.2f}%)```More info here: https://na.op.gg/summoner/userName={}'.format(
             stat['playerOrTeamName'],
             stat['tier'],
             stat['rank'],
             stat['leaguePoints'],
             stat['wins'],
             stat['losses'],
-            win_percentage)
+            win_percentage,
+            stat['playerOrTeamName'].replace(" ", "%20"))
 
       return '{} is not ranked.'.format(summoner['name'])
     except LoLException as err:

@@ -1814,21 +1814,21 @@ class MusicBot(discord.Client):
         await self.disconnect_all_voice_clients()
         raise exceptions.TerminateSignal
 
-    async def cmd_stats(self, message):
+    async def cmd_stats(self, leftover_args, summoner_name):
         """
         Usage:
             {command_prefix}stats summoner_name
 
         Get Ranked Solo Stats
         """
-        #TODO usage not showing
-        split = message.content.split(" ", 1)
-        if (len(split) < 2):
-            return Response("Usage: !stats <summoner_name>", delete_after=20)
-        elif (len(split) == 2):
-            api = RiotApi(self.config.riot_api_key)
-            stats = api.get_ranked_stats(split[1])
-            return Response(stats)
+        # handle names with spaces
+        if leftover_args:
+            summoner_name = ' '.join([summoner_name, *leftover_args])
+
+        api = RiotApi(self.config.riot_api_key)
+        stats = api.get_ranked_stats(summoner_name)
+
+        return Response(stats)
 
     async def cmd_mmr(self, message):
         """
