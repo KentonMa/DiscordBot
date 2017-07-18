@@ -1830,21 +1830,20 @@ class MusicBot(discord.Client):
 
         return Response(stats)
 
-    async def cmd_mmr(self, message):
+    async def cmd_mmr(self, leftover_args, summoner_name):
         """
         Usage:
             {command_prefix}mmr summoner_name
 
         Get MMR
         """
-        #TODO usage not showing
-        split = message.content.split(" ", 1)
-        if (len(split) < 2):
-            return Response("Usage: !mmr <summoner_name>", delete_after=20)
-        elif (len(split) == 2):
-            opgg = OPGGCrawler()
-            mmr = opgg.get_mmr(split[1])
-            return Response(mmr)
+        if leftover_args:
+            summoner_name = ' '.join([summoner_name, *leftover_args])
+
+        opgg = OPGGCrawler()
+        mmr = opgg.get_mmr(summoner_name)
+
+        return Response(mmr)
 
     async def cmd_counters(self, message):
         """
