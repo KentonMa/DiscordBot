@@ -18,8 +18,12 @@ class OPGGCrawler:
 
   def get_mmr(self, name):
     url = 'https://na.op.gg/summoner/ajax/mmr/summonerName={}'.format(name)
-    r = requests.get(url)
-    #TODO: status_code handling
+    try:
+      r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+      print(e)
+      return 'An error occured. Could not get MMR.'
+
     result = ''
     soup = BeautifulSoup(r.text, "html.parser")
     obj_mmr = self.get_mmr_from_html(soup)
@@ -68,7 +72,6 @@ class OPGGCrawler:
       '5': 'V'
     }
     return result[rank]
-'''
-c = OPGGCrawler()
-print(c.get_mmr('voyboy'))
-'''
+
+# c = OPGGCrawler()
+# print(c.get_mmr('voyboy'))
