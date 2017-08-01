@@ -1,4 +1,5 @@
 import requests
+from .opggcrawler import OPGGCrawler
 
 queueType = 'RANKED_SOLO_5x5'
 
@@ -67,7 +68,9 @@ class RiotApi:
       for stat in stats:
         if (stat['queueType'] == queueType):
           win_percentage = (stat['wins'] / (stat['wins'] + stat['losses'])) * 100
-          return '```\n{}\nRank: {} {}\nLP: {}\nWins: {} / Losses: {} (Win Rate: {:.2f}%)```More info here: https://na.op.gg/summoner/userName={}'.format(
+          opgg_crawler = OPGGCrawler()
+          mmr = opgg_crawler.get_mmr(stat['playerOrTeamName'])
+          return '```\n{}\nRank: {} {}\nLP: {}\nWins: {} / Losses: {} (Win Rate: {:.2f}%)\n{}```More info here: https://na.op.gg/summoner/userName={}'.format(
             stat['playerOrTeamName'],
             stat['tier'],
             stat['rank'],
@@ -75,6 +78,7 @@ class RiotApi:
             stat['wins'],
             stat['losses'],
             win_percentage,
+            mmr,
             stat['playerOrTeamName'].replace(" ", "%20"))
 
       return '{} is not ranked.'.format(summoner['name'])

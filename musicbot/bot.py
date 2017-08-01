@@ -28,7 +28,6 @@ from musicbot.config import Config, ConfigDefaults
 from musicbot.permissions import Permissions, PermissionsDefaults
 from musicbot.utils import load_file, write_file, sane_round_int
 from musicbot.riotapi import RiotApi
-from musicbot.opggcrawler import OPGGCrawler
 from musicbot.matchupggcrawler import MatchUpGGCrawler
 
 from . import exceptions
@@ -1829,21 +1828,6 @@ class MusicBot(discord.Client):
         stats = api.get_ranked_stats(summoner_name)
 
         return Response(stats)
-
-    async def cmd_mmr(self, leftover_args, summoner_name):
-        """
-        Usage:
-            {command_prefix}mmr summoner_name
-
-        Get MMR
-        """
-        if leftover_args:
-            summoner_name = ' '.join([summoner_name, *leftover_args])
-
-        opgg = OPGGCrawler()
-        mmr = opgg.get_mmr(summoner_name)
-
-        return Response(mmr)
 
     async def cmd_counters(self, message):
         """
